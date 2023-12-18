@@ -1,12 +1,12 @@
 import Link from "next/link";
+import TaskForm from "@/components/TaskForm";
+import TaskList from "@/components/TaskList";
 
 const TasksPage = () => {
   return (
-    <div>
-      <h1 className="text-7xl">Tasks Page</h1>
-      <Link href="/" className="text-2xl">
-        Home Page
-      </Link>
+    <div className="max-w-lg">
+      <TaskForm />
+      <TaskList />
     </div>
   );
 };
