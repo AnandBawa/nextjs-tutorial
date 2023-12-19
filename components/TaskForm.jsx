@@ -1,5 +1,5 @@
 "use client";
-import { useFormStatus } from "react-dom";
+import { useFormStatus, useFormState } from "react-dom";
 import { createTask } from "@/utils/actions";
 
 const SubmitButton = () => {
@@ -15,9 +15,14 @@ const SubmitButton = () => {
   );
 };
 
+const initialState = { message: null };
+
 const TaskForm = () => {
+  const [state, formAction] = useFormState(createTask, initialState);
+
   return (
-    <form action={createTask}>
+    <form action={formAction}>
+      {state.message ? <p className="mb-2">{state.message}</p> : null}
       <div className="join w-full">
         <input
           type="text"
@@ -26,6 +31,7 @@ const TaskForm = () => {
           name="content"
           required
         />
+        <SubmitButton />
       </div>
     </form>
   );
