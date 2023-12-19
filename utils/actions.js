@@ -1,5 +1,6 @@
 "use server";
 import prisma from "@/utils/db";
+import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -13,16 +14,21 @@ export const getAllTasks = async () => {
 
 export const createTask = async (prevState, formData) => {
   const content = formData.get("content");
+  const Task = z.object({
+    content: z.string().min(5),
+  });
+
   try {
+    Task.parse({ content });
     await prisma.task.create({
       data: {
         content,
       },
     });
     revalidatePath("/tasks");
-    return { message: "Success!" };
+    return { message: "success" };
   } catch (error) {
-    return { message: "Error..." };
+    return { message: "error" };
   }
 };
 
